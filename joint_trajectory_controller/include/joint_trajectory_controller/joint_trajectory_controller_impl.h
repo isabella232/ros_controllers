@@ -244,7 +244,9 @@ bool JointTrajectoryController<SegmentImpl, HardwareInterface>::init(HardwareInt
   const unsigned int n_joints = joint_names_.size();
 
   // URDF joints
-  urdf::ModelSharedPtr urdf = getUrdf(root_nh, "robot_description");
+  std::string robot_description = "robot_description";
+  controller_nh_.getParam("robot_description", robot_description);
+  urdf::ModelSharedPtr urdf = getUrdf(root_nh, robot_description);
   if (!urdf) {return false;}
 
   std::vector<urdf::JointConstSharedPtr> urdf_joints = getUrdfJoints(*urdf, joint_names_);
